@@ -1,3 +1,5 @@
+//clase abstracta para detallar propiedades y métodos de la conexión (INTERFAZ)
+
 abstract class DbCrearconexion {
   String direccionServidor = "default";
   String nombreDB = "default";
