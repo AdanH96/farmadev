@@ -1,44 +1,51 @@
-import 'package:farmadev/interfaz_databases/db_crearConexion.dart';
 import 'package:postgres/postgres.dart';
 
-//clase que implementa la interfaz de crearConexion e implementa los métodos.
+// Clase para manejar la conexión con PostgreSQL
+class CreardbImpl {
+  final String _direccionServidor = 'localhost';
+  final String _nombreDB = 'farmadevPSQL';
+  final int _puerto = 5433;
+  final String _usuarioDB = 'postgres';
+  final String _contrasenaDB = '2134';
 
-class CreardbImpl extends DbCrearconexion {
-  @override
-  String direccionServidor = "localhost";
-  @override
-  String nombreDB = "information_schema";
-  @override
-  int puerto = 5433;
-  @override
-  String usuarioDB = "postgres";
-  @override
-  String contrasenaDB = "2134";
-  late final Connection conn;
+  // Implementación de la conexión pra asegurar que sea única y bandera para verificar si la conexión cumple
+  late PostgreSQLConnection connection;
+  bool conexionCreada = false;
 
-  CreardbImpl(String direccion, String nombre, int puerto, String usuarioDB,
-      String contrasena)
-      : super(
-            direccionServidor: direccion,
-            nombreDB: nombre,
-            puerto: puerto,
-            usuarioDB: usuarioDB,
-            contrasenaDB: contrasena);
+  // Método para crear conexión
+  Future<void> crearConexion() async {
+    try {
+      // Crear la conexión con los parámetros necesarios
+      connection = PostgreSQLConnection(
+        _direccionServidor,
+        _puerto,
+        _nombreDB,
+        username: _usuarioDB,
+        password: _contrasenaDB,
+      );
 
-  Future crearConexion() async {
-    final conn = await Connection.open(
-      Endpoint(
-        host: direccionServidor,
-        database: nombreDB,
-        username: usuarioDB,
-        password: contrasenaDB,
-      )
+      // Abrir la conexión
+      await connection.open();
 
-      // si la conexión es a través de internet hay que activar el SSL, SSL -> verifyFull
-      ,
-      settings: const ConnectionSettings(sslMode: SslMode.disable),
-    );
+      // Establecer el search_path al esquema deseado
+      await connection.query('SET search_path TO information_schema');
 
-    return conn;
+      // Si no lanza excepción, la conexión fue exitosa
+      conexionCreada = true;
+      print("Conexión creada con éxito.");
+    } catch (e) {
+      // Si ocurre un error, marcar como fallida
+      conexionCreada = false;
+      print("Error al conectar a la base de datos: $e");
+    }
+  }
+
+  // Método para cerrar la conexión
+  Future<void> cerrarConexion() async {
+    if (conexionCreada) {
+      await connection.close();
+      conexionCreada = false;
+      print("Conexión cerrada.");
+    }
   }
 }

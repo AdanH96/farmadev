@@ -35,6 +35,8 @@ abstract class DbCrearusuario {
 
   Future signIn(String nombre, String email, String contrasena);
   Future logIn(String email, String contrasena);
+  Future deleteAccount(String email, String contrasena);
+  Future updateAccount(String email);
 
   //TODO NECESITO QUE SIGNIN SEA UN INSERT DE DATOS, Y LOGIN UNA CONSULTA. No necesito implementar nada más de momento
 }
