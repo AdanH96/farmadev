@@ -2,7 +2,7 @@ import 'package:mysql_client/mysql_client.dart';
 
 // Clase para manejar la conexión con MySQL
 class CreardbImpl {
-  final String _direccionServidor = 'localhost';
+  final String _direccionServidor = '10.0.2.2';
   final String _nombreDB = 'farmdevSQL';
   final int _puerto = 3306;
   final String _usuarioDB = 'farma';

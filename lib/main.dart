@@ -11,18 +11,17 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
   //TESTING CONNECTION
-  // void probarConexion() {
-
-  //   /*Para crear una conexión a la base de datos tanto como para crear un usuario,
-  //   como para ingresar el usuario, se necesita crear una instancia de la clase CreardbImpl y
-  //   llamar a sus métodos SignIn y logIn respectivamente. */
-  //   CrearusuarioImpl usuario = CrearusuarioImpl();
-  //   usuario.logIn("adanhsbmma@hotmail.com", "6164");
-  // }
+  void probarConexion() {
+    //   /*Para crear una conexión a la base de datos tanto como para crear un usuario,
+    //   como para ingresar el usuario, se necesita crear una instancia de la clase CreardbImpl y
+    //   llamar a sus métodos SignIn y logIn respectivamente. */
+    CrearusuarioImpl usuario = CrearusuarioImpl();
+    usuario.signIn("andrea", "andreatangogsx@gmail.com", "andrea");
+  }
 
   @override
   Widget build(BuildContext context) {
-    //probarConexion();
+    probarConexion();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
