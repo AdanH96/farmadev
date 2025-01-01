@@ -6,17 +6,6 @@ abstract class DbCrearusuario {
   String? _email;
   String? _contrasena;
 
-  DbCrearusuario(
-      {int? id,
-      String? nombre,
-      required String email,
-      required String contrasena}) {
-    _idUsuario = id;
-    _nombre = nombre;
-    _email = email;
-    _contrasena = contrasena;
-  }
-
   int getIdUsuario() {
     return _idUsuario ?? 0;
   }
@@ -37,6 +26,4 @@ abstract class DbCrearusuario {
   Future logIn(String email, String contrasena);
   Future deleteAccount(String email, String contrasena);
   Future updateAccount(String email);
-
-  //TODO NECESITO QUE SIGNIN SEA UN INSERT DE DATOS, Y LOGIN UNA CONSULTA. No necesito implementar nada más de momento
 }

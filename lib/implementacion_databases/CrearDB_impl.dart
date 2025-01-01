@@ -1,34 +1,32 @@
-import 'package:postgres/postgres.dart';
+import 'package:mysql_client/mysql_client.dart';
 
-// Clase para manejar la conexión con PostgreSQL
+// Clase para manejar la conexión con MySQL
 class CreardbImpl {
   final String _direccionServidor = 'localhost';
-  final String _nombreDB = 'farmadevPSQL';
-  final int _puerto = 5433;
-  final String _usuarioDB = 'postgres';
-  final String _contrasenaDB = '2134';
+  final String _nombreDB = 'farmdevSQL';
+  final int _puerto = 3306;
+  final String _usuarioDB = 'farma';
+  final String _contrasenaDB = '6164';
 
-  // Implementación de la conexión pra asegurar que sea única y bandera para verificar si la conexión cumple
-  late PostgreSQLConnection connection;
+  // Variable para almacenar la conexión
+  MySQLConnection? _connection;
+  //bandera booleana para asegurar que la conexión está activa
   bool conexionCreada = false;
 
   // Método para crear conexión
   Future<void> crearConexion() async {
     try {
-      // Crear la conexión con los parámetros necesarios
-      connection = PostgreSQLConnection(
-        _direccionServidor,
-        _puerto,
-        _nombreDB,
-        username: _usuarioDB,
+      //parámetros de conexión
+      _connection = await MySQLConnection.createConnection(
+        host: _direccionServidor,
+        port: _puerto,
+        userName: _usuarioDB,
         password: _contrasenaDB,
+        databaseName: _nombreDB,
       );
 
       // Abrir la conexión
-      await connection.open();
-
-      // Establecer el search_path al esquema deseado
-      await connection.query('SET search_path TO information_schema');
+      await _connection!.connect();
 
       // Si no lanza excepción, la conexión fue exitosa
       conexionCreada = true;
@@ -40,12 +38,23 @@ class CreardbImpl {
     }
   }
 
+  // Método para obtener la conexión
+  MySQLConnection? getConnection() {
+    if (_connection == null || !conexionCreada) {
+      print("Error: La conexión aún no está inicializada o activa.");
+      return null;
+    }
+    return _connection;
+  }
+
   // Método para cerrar la conexión
   Future<void> cerrarConexion() async {
-    if (conexionCreada) {
-      await connection.close();
+    if (_connection != null && conexionCreada) {
+      await _connection!.close();
       conexionCreada = false;
       print("Conexión cerrada.");
+    } else {
+      print("No hay conexión activa para cerrar.");
     }
   }
 }
