@@ -1,3 +1,4 @@
+import 'package:farmadev/config/theme/app_theme.dart';
 import 'package:farmadev/implementacion_databases/CrearDB_impl.dart';
 import 'package:farmadev/implementacion_databases/CrearUsuario_impl.dart';
 import 'package:flutter/material.dart';
@@ -21,35 +22,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    probarConexion();
+    // probarConexion();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      //el número que se le pase a AppTheme es el índice del color que se quiere seleccionar de la lista de colores
+      theme: AppTheme().getTheme(),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Flutter Demo'),
+          title: const Text('Flutter Demo'),
         ),
         body: Center(
-          child: Text('Hello World'),
+          child: FloatingActionButton(
+            onPressed: () {},
+            child: const Text("Hola mundo esto es una prueba"),
+          ),
         ),
       ),
     );
