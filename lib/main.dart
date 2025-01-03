@@ -1,3 +1,4 @@
+import 'package:farmadev/Scanner/Escaner.dart';
 import 'package:farmadev/config/theme/app_theme.dart';
 import 'package:farmadev/implementacion_databases/CrearDB_impl.dart';
 import 'package:farmadev/implementacion_databases/CrearUsuario_impl.dart';
@@ -25,20 +26,14 @@ class MyApp extends StatelessWidget {
     // probarConexion();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'FARMADEV',
       //el número que se le pase a AppTheme es el índice del color que se quiere seleccionar de la lista de colores
       theme: AppTheme().getTheme(),
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter Demo'),
-        ),
-        body: Center(
-          child: FloatingActionButton(
-            onPressed: () {},
-            child: const Text("Hola mundo esto es una prueba"),
+          appBar: AppBar(
+            title: const Text('FARMADEV'),
           ),
-        ),
-      ),
+          body: const Escaner()),
     );
   }
 }
